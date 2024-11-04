@@ -1,8 +1,6 @@
 package com.backend.Controller;
 
-import com.backend.Entity.Result;
-import com.backend.Entity.Student;
-import com.backend.Entity.Teacher;
+import com.backend.Entity.*;
 import com.backend.Mapper.LoginMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +36,29 @@ public class LoginController {
             return Result.Success(null);
         }
         else
+        {
+            return Result.Failure("密码输入错误");
+        }
+    }
+
+    @PostMapping("committee")
+    Result committeeLogin(@RequestBody Council committee) {
+        Council c = loginMapper.councilLogin(committee);
+        if (c != null) {
+            return Result.Success(null);
+        }
+        else
+        {
+            return Result.Failure("密码输入错误");
+        }
+    }
+
+    @PostMapping("auditor")
+    Result auditorLogin(@RequestBody Assessor assessor) {
+        Assessor a = loginMapper.assessorLogin(assessor);
+        if (a != null) {
+            return Result.Success(null);
+        }else
         {
             return Result.Failure("密码输入错误");
         }
