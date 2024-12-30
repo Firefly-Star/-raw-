@@ -1,6 +1,5 @@
 package com.backend.Entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,13 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectDisplay {
-
+public class Apply {
     private Integer topicId;
-    private String teacherName;
-    private String topicName;
-    private String topicType;
-    private String description;
-    private String applyStatus;
-
+    private Integer studentId;
 }

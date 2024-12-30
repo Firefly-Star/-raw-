@@ -19,8 +19,8 @@ public interface SubjectMapper {
             "where subjectId = #{topicId}")
     void deleteSubject(Long topicId);
 
-    @Select("SELECT t.teacherName, s.subjectName, s.subjectType, s.description" +
-            " FROM subject s inner join teacher t on s.teacherId = t.teacherId")
+    @Select("SELECT t.teacherName, s.subjectName, s.subjectType, s.description, s.state AS applyStatus, s.subjectId AS topicId" +
+            " FROM subject s inner join teacher t on s.teacherId = t.teacherId" )
     @Results({
             @Result(column = "teacherName", property = "teacherName"),
             @Result(column = "subjectName", property = "topicName"),
@@ -28,5 +28,16 @@ public interface SubjectMapper {
             @Result(column = "description", property = "description")
     })
     List<SubjectDisplay> selectAllsubject();
+
+    @Select("SELECT t.teacherName, s.subjectName as topicName, s.subjectType as topicType, s.description, ss.subjectId as topicId" +
+            " FROM subject s inner join teacher t on s.teacherId = t.teacherId" +
+            " inner join student_subject ss on s.subjectId = ss.subjectId" +
+            " where ss.studentId = #{studentId} and ss.state = #{state}")
+    List<SubjectDisplay> selectAllsubjectByStudent(Integer studentId, String state);
+
+    @Select("SELECT t.teacherName, s.subjectName as topicName, s.subjectType as topicType, s.description as description, s.state AS applyStatus, s.subjectId AS topicId" +
+            " FROM subject s inner join teacher t on s.teacherId = t.teacherId" +
+            " where s.state = '已申请'" )
+    List<SubjectDisplay> selectAllsubjectByTeacher();
 
 }

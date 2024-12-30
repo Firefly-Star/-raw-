@@ -1,9 +1,6 @@
 package com.backend.Controller;
 
-import com.backend.Entity.Result;
-import com.backend.Entity.Subject;
-import com.backend.Entity.SubjectDisplay;
-import com.backend.Entity.SubjectId;
+import com.backend.Entity.*;
 import com.backend.Mapper.SubjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/topic")
+@RequestMapping("api/topics")
+@CrossOrigin(origins = {"http://localhost:8081", "http://127.0.0.1:8081", "http://localhost:8082", "http://127.0.0.1:8082"})
 public class SubjectController {
 
     @Autowired
@@ -44,7 +42,29 @@ public class SubjectController {
     Result DisplaySubjectAll()
     {
         List<SubjectDisplay> res = subjectMapper.selectAllsubject();
-        return Result.Success(res);
+        ListR rrr = new ListR();
+        rrr.setList(res);
+        return Result.Success(rrr);
+    }
+
+    @GetMapping("student")
+    Result DisplaySubjectStudent(@RequestParam Integer studentId, @RequestParam String applyStatus)
+    {
+        System.out.println(studentId);
+        System.out.println(applyStatus);
+        List<SubjectDisplay> res = subjectMapper.selectAllsubjectByStudent(studentId, applyStatus);
+        ListR rrr = new ListR();
+        rrr.setList(res);
+        return Result.Success(rrr);
+    }
+
+    @GetMapping("teacher")
+    Result DisplaySubjectTeacher()
+    {
+        List<SubjectDisplay> res = subjectMapper.selectAllsubjectByTeacher();
+        ListR rrr = new ListR();
+        rrr.setList(res);
+        return Result.Success(rrr);
     }
 
 
